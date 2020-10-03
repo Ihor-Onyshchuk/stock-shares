@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import {connect} from 'react-redux';
 import { fetchData } from '../actions';
+import Header from '../components/Header/indes';
 
 const App = ({data, dataSettings, onFetchData}) => {
-  useEffect(() => {
-    onFetchData()
-  }, [])
+  useEffect(() => onFetchData(), [])
 
   return (
     <div>
+      <Header/>
       <ul>
         {data && data.map(({companyName, primaryExchange, symbol}) => (
           <li key={symbol}>
