@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import {connect} from 'react-redux';
 
 import { fetchData } from '../actions';
-import Header from '../components/Header/indes';
+import Header from '../components/Header';
 import Table from '../containers/Table';
 
 const App = ({onFetchData}) => {
@@ -13,6 +13,10 @@ const App = ({onFetchData}) => {
       <Header/>
       <div className="container my-5">
         <Table/>
+        <div className="">
+          <button className="btn btn-secondary px-4">next</button>
+          <button className="btn btn-secondary ml-3 px-4">prev</button>
+        </div>
       </div>
     </>
   );
