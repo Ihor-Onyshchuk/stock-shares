@@ -5,5 +5,5 @@ export const settings = {
 
 export const initialState = {
   data: [],
-  settings,
+  dataSettings: settings,
 };

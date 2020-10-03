@@ -21,5 +21,5 @@ export const fetchData = () => (dispatch) => {
   dispatch(fetchDataRequest());
   getStockInfo()
     .then((response) => dispatch(fetchDataSuccess(response.data || [])))
-    .catch(() => dispatch(fetchUsersFailure()))
+    .catch(() => dispatch(fetchDataFailure()))
 }

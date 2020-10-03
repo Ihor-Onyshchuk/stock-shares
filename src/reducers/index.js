@@ -16,10 +16,12 @@ const data = (state = [], action) => {
   }
 }
 
-const settings = (state = settings, action) => {
+const dataSettings = (state = settings, action) => {
   switch (action.type) {
     case FETCH_DATA_REQUEST:
       return {loading: true, error: false};
+    case FETCH_DATA_SUCCESS:
+      return {loading: false, error: false};
     case FETCH_DATA_FAILURE:
       return {loading: false, error: true}
     default:
@@ -29,5 +31,5 @@ const settings = (state = settings, action) => {
 
 export default combineReducers({
   data,
-  settings
+  dataSettings
 })

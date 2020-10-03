@@ -1,11 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import {connect} from 'react-redux';
+import { fetchData } from '../actions';
 
-function App() {
+const App = ({data, dataSettings, onFetchData}) => {
+  useEffect(() => {
+    onFetchData()
+  }, [])
+
   return (
     <div>
-      Hello!
+      <ul>
+        {data && data.map(({companyName, primaryExchange, symbol}) => (
+          <li key={symbol}>
+            <div>Company {companyName}</div>
+            <div>Primary exchange {primaryExchange}</div>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = ({data, dataSettings}) => ({
+  data,
+  dataSettings
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  onFetchData: () => dispatch(fetchData())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
