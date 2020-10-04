@@ -32,9 +32,11 @@ const App = ({data, dataSettings, onFetchData}) => {
   const handlePageChange = useCallback((page) => {
     setActivePage(page);
     setTableData(getDataChunk(allData, page));
-  }, [])
+  }, [activePage, tableData])
 
   const handelOnDragEnd = useCallback((result) => {
+    if (!result.destination) return;
+
     const items = Array.from(tableData);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
