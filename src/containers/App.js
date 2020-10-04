@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { DragDropContext } from 'react-beautiful-dnd';
 import {connect} from 'react-redux';
 
-import { fetchData } from '../actions';
 import Header from '../components/Header';
-import { pagination } from '../config';
 import Table from '../containers/Table';
+import { fetchData } from '../actions';
+import { pagination } from '../config';
 
 const App = ({data, dataSettings, onFetchData}) => {
   const [activePage, setActivePage] = useState(1);
@@ -28,18 +29,26 @@ const App = ({data, dataSettings, onFetchData}) => {
     return data.slice(offset * pagination.perPage, page * pagination.perPage);
   };
 
-  const handlePageChange = (page) => {
+  const handlePageChange = useCallback((page) => {
     setActivePage(page);
     setTableData(getDataChunk(allData, page));
-  }
+  }, [])
+
+  const handelOnDragEnd = useCallback((result) => {
+    const items = Array.from(tableData);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    setTableData(items);
+  }, [tableData]);
 
   return (
     <>
       <Header/>
       <div className="container my-5">
-        <Table 
-          data={tableData}
-        />
+        <DragDropContext onDragEnd={handelOnDragEnd}>
+            <Table data={tableData} />
+        </DragDropContext>
         <div className="">
           <button 
             onClick={() => handlePageChange(activePage - 1)}

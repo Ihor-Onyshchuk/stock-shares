@@ -1,29 +1,36 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
 
 import { TdRow, ThRow } from '../../components/Table/Trow';
 
 
 const TableContainer = ({data}) => {
 
-  const renderRow = (content) => {
+  const renderRow = (content, index) => {
     const {
       companyName, 
       primaryExchange, 
       calculationPrice, 
       high, 
       low, 
-      symbol
     } = content;
     
     return (
-      <TdRow key={symbol}>
-        {companyName}
-        {primaryExchange}
-        {calculationPrice}
-        {high}
-        {low}
-      </TdRow>
+      <Draggable
+        key={index}
+        index={index}
+        draggableId={index.toString()}
+      >
+        {(provided) => (
+          <TdRow provided={provided} >
+            {companyName}
+            {primaryExchange}
+            {calculationPrice}
+            {high}
+            {low}
+          </TdRow>
+        )}
+      </Draggable>
     )
   }
 
@@ -38,7 +45,17 @@ const TableContainer = ({data}) => {
           <div>Low Price</div>
         </ThRow>
       </thead>
-      <tbody>{data.map(renderRow)}</tbody>
+      <Droppable droppableId="droppableId">
+        {(provided) => (
+          <tbody
+          {...provided.droppableProps}
+          ref={provided.innerRef}
+          >
+            {data.map(renderRow)}
+            {provided.placeholder}
+          </tbody>
+        )}
+      </Droppable>
     </table>
   )
 };
