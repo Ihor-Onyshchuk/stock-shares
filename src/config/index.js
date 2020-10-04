@@ -1,13 +1,18 @@
-export const settings = {
+export const dataSettings = {
   loading: false,
   error: false,
 };
 
-export const initialState = {
-  data: [],
-  dataSettings: settings,
-};
-
-export const pagination = {
+export const pageSettings = {
+  page: 1,
   perPage: 10,
+  isFirst: true,
+  isLast: false,
+}
+
+export const initialState = {
+  dataSettings,
+  pageSettings,
+  data: [],
+  tableData: [],
 };

@@ -1,10 +1,12 @@
 import {combineReducers} from 'redux';
 
-import {settings} from '../config';
+import {dataSettings as defaultDataSettings, pageSettings as defaultPageSettings} from '../config';
 import {
+  CHANGE_PAGE,
+  UPDATE_TABLE_DATA,
   FETCH_DATA_REQUEST,
   FETCH_DATA_FAILURE,
-  FETCH_DATA_SUCCESS
+  FETCH_DATA_SUCCESS,
 } from '../actions';
 
 const data = (state = [], action) => {
@@ -16,7 +18,7 @@ const data = (state = [], action) => {
   }
 }
 
-const dataSettings = (state = settings, action) => {
+const dataSettings = (state = defaultDataSettings, action) => {
   switch (action.type) {
     case FETCH_DATA_REQUEST:
       return {loading: true, error: false};
@@ -29,7 +31,38 @@ const dataSettings = (state = settings, action) => {
   }
 }
 
+const tableData = (state = [], action) => {
+  switch (action.type) {
+    case FETCH_DATA_SUCCESS:
+    case CHANGE_PAGE:
+      const {result, pageSettings: {perPage, page}} = action;
+      return result.slice((page - 1) * perPage, page * perPage);
+    case UPDATE_TABLE_DATA:
+      return action.data;
+    default:
+      return state;
+  }
+}
+
+const pageSettings = (state = defaultPageSettings, action) => {
+  switch (action.type) {
+    case FETCH_DATA_SUCCESS:
+    case CHANGE_PAGE:
+      const {result, pageSettings: {perPage, page}} = action;
+      return {
+        ...state,
+        page,
+        isFirst: page === 1,
+        isLast: page * perPage >= result.length,
+      }
+    default:
+      return state;
+  }
+}
+
 export default combineReducers({
   data,
-  dataSettings
+  tableData,
+  dataSettings,
+  pageSettings,
 })

@@ -1,65 +1,58 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import {connect} from 'react-redux';
 
 import Header from '../components/Header';
 import Table from '../containers/Table';
-import { fetchData } from '../actions';
-import { pagination } from '../config';
+import { fetchData, onPageChange, updateTableData } from '../actions';
 
-const App = ({data, dataSettings, onFetchData}) => {
-  const [activePage, setActivePage] = useState(1);
-  const [allData, setAllData] = useState([]);
-  const [tableData, setTableData] = useState([]);
+const App = ({
+  tableData, 
+  dataSettings, 
+  pageSettings, 
+  onFetchData, 
+  onPageChange, 
+  onTableDataUpdate
+}) => {
+  const {loading, error } = dataSettings;
+  const {page, isLast, isFirst} = pageSettings;
 
   useEffect(() => {
     onFetchData()
   }, [])
 
-  useEffect(() => {
-    const {loading, error} = dataSettings;
-    if (!loading && !error) {
-      setAllData(data);
-      setTableData(getDataChunk(data));
-    }
-  }, [data]);
-
-  const getDataChunk = (data, page = 1) => {
-    const offset = page - 1;
-    return data.slice(offset * pagination.perPage, page * pagination.perPage);
-  };
-
-  const handlePageChange = useCallback((page) => {
-    setActivePage(page);
-    setTableData(getDataChunk(allData, page));
-  }, [activePage, tableData])
-
   const handelOnDragEnd = useCallback((result) => {
     if (!result.destination) return;
 
-    const items = Array.from(tableData);
+    const items = [...tableData];
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
 
-    setTableData(items);
+    onTableDataUpdate(items);
   }, [tableData]);
 
   return (
     <>
       <Header/>
       <div className="container my-5">
-        <DragDropContext onDragEnd={handelOnDragEnd}>
-            <Table data={tableData} />
-        </DragDropContext>
+        {loading && <div>loading...</div>}
+        {error && <div>Error</div>}
+        {tableData && (
+          <DragDropContext onDragEnd={handelOnDragEnd}>
+            <Table tableData={tableData} page={page}/>
+          </DragDropContext>
+        )}
         <div className="">
           <button 
-            onClick={() => handlePageChange(activePage - 1)}
+            onClick={() => onPageChange(page - 1)}
+            disabled={isFirst}
             className="btn btn-secondary px-4"
           >
             prev
           </button>
           <button 
-            onClick={() => handlePageChange(activePage + 1)}
+            onClick={() => onPageChange(page + 1)}
+            disabled={isLast}
             className="btn btn-secondary ml-3 px-4"
           >
             next
@@ -70,13 +63,16 @@ const App = ({data, dataSettings, onFetchData}) => {
   );
 }
 
-const mapStateToProps = ({data, dataSettings}) => ({
-  data,
-  dataSettings
+const mapStateToProps = ({tableData, dataSettings, pageSettings}) => ({
+  tableData,
+  dataSettings,
+  pageSettings,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  onFetchData: () => dispatch(fetchData())
+  onFetchData: () => dispatch(fetchData()),
+  onPageChange: (page) => dispatch(onPageChange(page)),
+  onTableDataUpdate: (data) => dispatch(updateTableData(data)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

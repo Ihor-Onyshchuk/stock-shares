@@ -4,22 +4,45 @@ export const FETCH_DATA_REQUEST = 'FETCH_DATA_REQUEST';
 export const FETCH_DATA_FAILURE = 'FETCH_DATA_FAILURE';
 export const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS';
 
-export const fetchDataRequest = () => ({
+export const CHANGE_PAGE = 'CHANGE_PAGE';
+export const UPDATE_TABLE_DATA = 'UPDATE_TABLE_DATA';
+
+const fetchDataRequest = () => ({
   type: FETCH_DATA_REQUEST
 });
 
-export const fetchDataFailure = () => ({
+const fetchDataFailure = () => ({
   type: FETCH_DATA_FAILURE,
 });
 
-export const fetchDataSuccess = (result) => ({
+const fetchDataSuccess = (result, pageSettings) => ({
   type: FETCH_DATA_SUCCESS,
-  result
-})
+  pageSettings,
+  result,
+});
 
-export const fetchData = () => (dispatch) => {
+export const fetchData = () => (dispatch, getState) => {
   dispatch(fetchDataRequest());
   getStockInfo()
-    .then((response) => dispatch(fetchDataSuccess(response.data || [])))
+    .then((response) => {
+      const {pageSettings} = getState();
+      dispatch(fetchDataSuccess(response.data || [], pageSettings))
+    })
     .catch(() => dispatch(fetchDataFailure()))
-}
+};
+
+const pageChange = (result, pageSettings) => ({
+  type: CHANGE_PAGE,
+  result,
+  pageSettings,
+});
+
+export const onPageChange = (nextPage) => (dispatch, getState) => {
+  const {data, pageSettings} = getState();
+  dispatch(pageChange(data, {...pageSettings, page: nextPage}))
+};
+
+export const updateTableData = (data) => ({
+  type: UPDATE_TABLE_DATA,
+  data,
+})
