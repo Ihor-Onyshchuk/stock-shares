@@ -5,8 +5,16 @@ import { TdRow, ThRow } from '../../components/Table/Trow';
 
 
 const TableContainer = ({data}) => {
+
   const renderRow = (content) => {
-    const {companyName, primaryExchange, calculationPrice, high, low, symbol} = content;
+    const {
+      companyName, 
+      primaryExchange, 
+      calculationPrice, 
+      high, 
+      low, 
+      symbol
+    } = content;
     
     return (
       <TdRow key={symbol}>
@@ -20,7 +28,7 @@ const TableContainer = ({data}) => {
   }
 
   return (
-    <table className="table table-borderless shadow p-3 mb-5 bg-white rounded">
+    <table className="table table-borderless shadow p-3 mb-5 bg-white rounded table-hover">
       <thead className="border-bottom border-secondary">
         <ThRow>
           <div>Company</div>
@@ -35,8 +43,4 @@ const TableContainer = ({data}) => {
   )
 };
 
-const mapStateToProps = ({data}) => ({
-  data
-});
-
-export default connect(mapStateToProps)(TableContainer);
+export default TableContainer;
