@@ -2,7 +2,19 @@ import React from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 
 import { TdRow, ThRow } from '../../components/Table/Trow';
+import '../../components/Table/Table.scss';
 
+const getDraggableStyle = (isDragging, provided) => ({
+  backgroundColor: isDragging ? 'white' : 'none',
+  borderRadius: isDragging ? '10px' : 'none',
+  boxShadow: isDragging ? '0 .5rem 1rem rgba(0,0,0,.15)' : 'none',
+  display: isDragging ? 'table' : 'table-row',
+  ...provided.draggableProps.style,
+});
+
+const getDroppabeStyle = (isDraggingOver) => ({
+  backgroundColor: isDraggingOver ? '#95A5A6' : 'white'
+});
 
 const TableContainer = ({tableData, page}) => {
   const renderRow = (content, index) => {
@@ -11,34 +23,37 @@ const TableContainer = ({tableData, page}) => {
       primaryExchange, 
       calculationPrice, 
       high, 
-      low, 
+      low,
     } = content;
     const noValue = <span>&#9866;</span>;
-    
+        
     return (
       <Draggable
         key={index}
         index={index}
         draggableId={index.toString()}
       >
-        {(provided) => (
-            <TdRow provided={provided}>
-              <div>{(index + 1) + (page - 1 ) * 10}</div>
-              <div>{companyName}</div>
-              <div>{primaryExchange}</div>
-              <div>{calculationPrice}</div>
-              <div>{high || noValue}</div>
-              <div>{low || noValue}</div>
-            </TdRow>
-          )
-        }
+        {(provided, {isDragging}) => (
+          <TdRow
+            provided={provided} 
+            style={getDraggableStyle(isDragging, provided)}
+          >
+            {(index + 1) + (page - 1 ) * 10}
+            {companyName || noValue}
+            {primaryExchange || noValue}
+            {calculationPrice || noValue}
+            {high || noValue} 
+            {low || noValue}  
+          </TdRow>
+        )}
       </Draggable>
     )
   };
 
   return (
-    <table className="table table-borderless shadow p-3 mb-5 bg-white rounded table-hover">
-      <thead className="border-bottom border-secondary">
+    <table className="table table-borderless shadow mb-3 bg-white rounded">
+      <caption>Most active companies rating</caption>
+      <thead className="thead border-bottom border-secondary">
         <ThRow>
           <div>&#8470;</div>
           <div>Company</div>
@@ -49,10 +64,11 @@ const TableContainer = ({tableData, page}) => {
         </ThRow>
       </thead>
       <Droppable droppableId="droppableId">
-        {(provided) => (
+        {(provided, {isDraggingOver}) => (
           <tbody
             {...provided.droppableProps}
             ref={provided.innerRef}
+            style={getDroppabeStyle(isDraggingOver)}
           >
             {tableData.map(renderRow)}
             {provided.placeholder}

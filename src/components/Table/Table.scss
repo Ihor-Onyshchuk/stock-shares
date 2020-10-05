@@ -1,0 +1,17 @@
+td {
+  table-layout: fixed;
+  vertical-align: center;
+}
+
+tr:not(:first-child) {
+  background-color: white;
+}
+
+.thead {
+  background-color: #95a5a6;
+}
+
+// table {
+//   width: 100%;
+//   height: auto;
+// }

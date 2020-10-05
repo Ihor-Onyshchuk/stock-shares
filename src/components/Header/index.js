@@ -5,7 +5,7 @@ const AppHeader = () => (
     <div className="container">
       <div className="row row-cols-2 align-items-center py-3">
         <div className="col">
-          <h1>Stocks</h1>
+          <h1>Market Lib</h1>
         </div>
       </div>
     </div>

@@ -2,10 +2,10 @@ import React, { useCallback, useEffect } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import {connect} from 'react-redux';
 
+import Alert from '../components/Alert'; 
 import Header from '../components/Header';
 import Table from '../containers/Table';
 import { fetchData, onPageChange, updateTableData } from '../actions';
-import Alert from '../components/Alert';
 import LoadingSpiner from '../components/LoadingSpiner/LoadingSpiner';
 
 const App = ({
@@ -49,7 +49,7 @@ const App = ({
       <div className="container my-5">
         {loading && <LoadingSpiner/>}
         {error && <Alert type="danger" text="Something go wrong!" />}
-        {!!tableData.length && (
+        {tableData.length && (
           <>
             <DragDropContext onDragEnd={handelOnDragEnd}>
               <Table tableData={tableData} page={page}/>
@@ -58,16 +58,16 @@ const App = ({
               <button 
                 onClick={handlePrev}
                 disabled={isFirst}
-                className="btn btn-secondary px-4"
+                className="btn btn-info px-4"
               >
-                prev
+                Prev
               </button>
               <button 
                 onClick={handleNext}
                 disabled={isLast}
-                className="btn btn-secondary ml-3 px-4"
+                className="btn btn-info ml-3 px-4"
               >
-                next
+                Next
               </button>
             </div>
           </>

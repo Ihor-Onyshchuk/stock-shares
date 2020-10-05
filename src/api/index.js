@@ -6,5 +6,5 @@ const http = axios.create({
 });
 
 export const getStockInfo = () => (
-  http.get(`/stock/market/list/mostactive?&listLimit=30&token=${API_TOKEN}`)
+  http.get(`/stock/market/list/mostactive?&listLimit=100&token=${API_TOKEN}`)
 );
