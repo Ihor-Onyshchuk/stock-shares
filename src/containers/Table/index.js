@@ -13,6 +13,7 @@ const TableContainer = ({tableData, page}) => {
       high, 
       low, 
     } = content;
+    const noValue = <span>&#9866;</span>;
     
     return (
       <Draggable
@@ -26,8 +27,8 @@ const TableContainer = ({tableData, page}) => {
               <div>{companyName}</div>
               <div>{primaryExchange}</div>
               <div>{calculationPrice}</div>
-              <div>{high}</div>
-              <div>{low}</div>
+              <div>{high || noValue}</div>
+              <div>{low || noValue}</div>
             </TdRow>
           )
         }
@@ -39,7 +40,7 @@ const TableContainer = ({tableData, page}) => {
     <table className="table table-borderless shadow p-3 mb-5 bg-white rounded table-hover">
       <thead className="border-bottom border-secondary">
         <ThRow>
-          <div>&#35;</div>
+          <div>&#8470;</div>
           <div>Company</div>
           <div>Primary Exchange</div>
           <div>Calculation Price</div>
