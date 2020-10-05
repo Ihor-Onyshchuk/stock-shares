@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import Table from '../containers/Table';
 import { fetchData, onPageChange, updateTableData } from '../actions';
 import Alert from '../components/Alert';
+import LoadingSpiner from '../components/LoadingSpiner/LoadingSpiner';
 
 const App = ({
   tableData, 
@@ -46,7 +47,7 @@ const App = ({
     <>
       <Header/>
       <div className="container my-5">
-        {loading && <div>loading...</div>}
+        {loading && <LoadingSpiner/>}
         {error && <Alert type="danger" text="Something go wrong!" />}
         {!!tableData.length && (
           <>

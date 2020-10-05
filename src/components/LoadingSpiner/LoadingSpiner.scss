@@ -1,0 +1,27 @@
+%load-shared {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.load-indicator {
+  @extend %load-shared;
+
+  .load-img {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .load-bg {
+    @extend %load-shared;
+    background-color: #f8f8f8;
+    opacity: .7;
+  }
+}
