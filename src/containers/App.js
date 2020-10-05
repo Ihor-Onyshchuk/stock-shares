@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import Header from '../components/Header';
 import Table from '../containers/Table';
 import { fetchData, onPageChange, updateTableData } from '../actions';
+import Alert from '../components/Alert';
 
 const App = ({
   tableData, 
@@ -46,7 +47,7 @@ const App = ({
       <Header/>
       <div className="container my-5">
         {loading && <div>loading...</div>}
-        {error && <div>Error</div>}
+        {error && <Alert type="danger" text="Something go wrong!" />}
         {!!tableData.length && (
           <>
             <DragDropContext onDragEnd={handelOnDragEnd}>
