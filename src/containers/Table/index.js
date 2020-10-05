@@ -21,18 +21,19 @@ const TableContainer = ({tableData, page}) => {
         draggableId={index.toString()}
       >
         {(provided) => (
-          <TdRow provided={provided}>
-            <div>{(index + 1) + (page - 1 ) * 10}</div>
-            <div>{companyName}</div>
-            <div>{primaryExchange}</div>
-            <div>{calculationPrice}</div>
-            <div>{high}</div>
-            <div>{low}</div>
-          </TdRow>
-        )}
+            <TdRow provided={provided}>
+              <div>{(index + 1) + (page - 1 ) * 10}</div>
+              <div>{companyName}</div>
+              <div>{primaryExchange}</div>
+              <div>{calculationPrice}</div>
+              <div>{high}</div>
+              <div>{low}</div>
+            </TdRow>
+          )
+        }
       </Draggable>
     )
-  }
+  };
 
   return (
     <table className="table table-borderless shadow p-3 mb-5 bg-white rounded table-hover">

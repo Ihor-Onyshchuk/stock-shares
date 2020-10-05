@@ -10,7 +10,7 @@ export const TdRow = ({children, provided}) => (
       <td className="text-left">{child}</td>
     ))}
   </tr>
-);
+)
 
 export const ThRow = ({ children }) => (
   <tr >

@@ -31,33 +31,45 @@ const App = ({
     onTableDataUpdate(items);
   }, [tableData]);
 
+  const handleNext = () => {
+    if (isLast) return;
+    onPageChange(page + 1)
+  }
+
+  const handlePrev = () => {
+    if (isFirst) return;
+    onPageChange(page - 1)
+  }
+
   return (
     <>
       <Header/>
       <div className="container my-5">
         {loading && <div>loading...</div>}
         {error && <div>Error</div>}
-        {tableData && (
-          <DragDropContext onDragEnd={handelOnDragEnd}>
-            <Table tableData={tableData} page={page}/>
-          </DragDropContext>
+        {!!tableData.length && (
+          <>
+            <DragDropContext onDragEnd={handelOnDragEnd}>
+              <Table tableData={tableData} page={page}/>
+            </DragDropContext>
+            <div>
+              <button 
+                onClick={handlePrev}
+                disabled={isFirst}
+                className="btn btn-secondary px-4"
+              >
+                prev
+              </button>
+              <button 
+                onClick={handleNext}
+                disabled={isLast}
+                className="btn btn-secondary ml-3 px-4"
+              >
+                next
+              </button>
+            </div>
+          </>
         )}
-        <div className="">
-          <button 
-            onClick={() => onPageChange(page - 1)}
-            disabled={isFirst}
-            className="btn btn-secondary px-4"
-          >
-            prev
-          </button>
-          <button 
-            onClick={() => onPageChange(page + 1)}
-            disabled={isLast}
-            className="btn btn-secondary ml-3 px-4"
-          >
-            next
-          </button>
-        </div>
       </div>
     </>
   );
