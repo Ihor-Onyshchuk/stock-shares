@@ -52,7 +52,7 @@ const TableContainer = ({tableData, page}) => {
 
   return (
     <table className="table table-borderless shadow bg-white rounded">
-      <caption>Most active companies rating</caption>
+      <caption>Most active companies</caption>
       <thead className="thead border-bottom border-secondary table-head">
         <ThRow>
           <span>&#8470;</span>
