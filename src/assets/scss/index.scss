@@ -1,4 +1,12 @@
-@import '~bootstrap';
+// Bootstrap partials
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '~bootstrap/scss/utilities';
+@import '~bootstrap/scss/vendor/rfs';
+
+@import '~bootstrap/scss/alert';
+@import '~bootstrap/scss/buttons';
+@import '~bootstrap/scss/tables';
+@import '~bootstrap/scss/grid';
 
 html,
 body {
