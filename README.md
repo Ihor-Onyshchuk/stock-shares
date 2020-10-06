@@ -18,4 +18,5 @@ Runs the app in the development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 
-![cover for app](https://github.com/Ihor-Onyshchuk/stock-shares/blob/master/preview.jpg 'preview')
+![cover for app](https://github.com/Ihor-Onyshchuk/stock-shares/blob/master/preview-1.jpg 'preview')
+![cover for app](https://github.com/Ihor-Onyshchuk/stock-shares/blob/master/preview-2.jpg 'preview')
