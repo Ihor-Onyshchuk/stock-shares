@@ -5,9 +5,9 @@ import {connect} from 'react-redux';
 import Alert from '../components/Alert'; 
 import Header from '../components/Header';
 import Table from '../containers/Table';
+import ToggleButton from '../components/ToggleButton';
 import { fetchData, onPageChange, updateTableData } from '../actions';
 import LoadingSpiner from '../components/LoadingSpiner/LoadingSpiner';
-import ToggleButton from '../components/ToggleButton';
 
 const App = ({
   tableData, 
