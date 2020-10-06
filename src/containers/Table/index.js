@@ -20,12 +20,13 @@ const TableContainer = ({tableData, page}) => {
     const {
       companyName, 
       primaryExchange, 
-      calculationPrice, 
-      high, 
-      low,
+      marketCap, 
+      week52High, 
+      week52Low,
     } = content;
     const noValue = <span>&#9866;</span>;
     const rowNumber = (index + 1) + (page - 1 ) * 10;
+    const toBillion = (sum) => (sum / 1000000000).toFixed(2);
         
     return (
       <Draggable
@@ -41,9 +42,9 @@ const TableContainer = ({tableData, page}) => {
             {rowNumber}
             {companyName || noValue}
             {primaryExchange || noValue}
-            {calculationPrice || noValue}
-            {high || noValue} 
-            {low || noValue}  
+            {toBillion(marketCap) || noValue}
+            {week52Low || noValue}  
+            {week52High || noValue} 
           </TdRow>
         )}
       </Draggable>
@@ -58,9 +59,9 @@ const TableContainer = ({tableData, page}) => {
           <span>&#8470;</span>
           <span>Company</span>
           <span>Primary Exchange</span>
-          <span>Calculation Price</span>
-          <span>High Price&#47;&#36;</span>
-          <span>Low Price&#47;&#36;</span>
+          <span>Market Cap/Billion &#36;</span>
+          <span>Low Weekly Price/&#36;</span>
+          <span>High Weekly Price/&#36;</span>
         </ThRow>
       </thead>
       <Droppable droppableId="droppableId">

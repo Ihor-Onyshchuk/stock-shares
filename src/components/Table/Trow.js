@@ -17,7 +17,7 @@ export const TdRow = ({children, provided, style}) => (
 export const ThRow = ({ children }) => (
   <tr >
     {React.Children.map(children, (child) => (
-      <th>{child}</th>
+      <th className="table-cell">{child}</th>
     ))}
   </tr>
 );
