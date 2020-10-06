@@ -7,6 +7,7 @@ import Header from '../components/Header';
 import Table from '../containers/Table';
 import { fetchData, onPageChange, updateTableData } from '../actions';
 import LoadingSpiner from '../components/LoadingSpiner/LoadingSpiner';
+import ToggleButton from '../components/ToggleButton';
 
 const App = ({
   tableData, 
@@ -46,7 +47,7 @@ const App = ({
   return (
     <>
       <Header/>
-      <div className="container my-5">
+      <div className="container">
         {loading && <LoadingSpiner/>}
         {error && <Alert type="danger" text="Something go wrong!" />}
         {!!tableData.length && (
@@ -54,22 +55,16 @@ const App = ({
             <DragDropContext onDragEnd={handelOnDragEnd}>
               <Table tableData={tableData} page={page}/>
             </DragDropContext>
-            <div>
-              <button 
-                onClick={handlePrev}
-                disabled={isFirst}
-                className="btn btn-info px-4"
-              >
-                Prev
-              </button>
-              <button 
-                onClick={handleNext}
-                disabled={isLast}
-                className="btn btn-info ml-3 px-4"
-              >
-                Next
-              </button>
-            </div>
+            <ToggleButton 
+              name="Prev"
+              disabled={isFirst}
+              handleClick={handlePrev}
+            />
+            <ToggleButton 
+              name="Next"
+              disabled={isLast}
+              handleClick={handleNext}
+            />
           </>
         )}
       </div>
