@@ -49,7 +49,7 @@ const App = ({
       <div className="container my-5">
         {loading && <LoadingSpiner/>}
         {error && <Alert type="danger" text="Something go wrong!" />}
-        {tableData.length && (
+        {!!tableData.length && (
           <>
             <DragDropContext onDragEnd={handelOnDragEnd}>
               <Table tableData={tableData} page={page}/>

@@ -5,7 +5,6 @@ import { TdRow, ThRow } from '../../components/Table/Trow';
 import '../../components/Table/Table.scss';
 
 const getDraggableStyle = (isDragging, provided) => ({
-  backgroundColor: isDragging ? 'white' : 'none',
   borderRadius: isDragging ? '10px' : 'none',
   boxShadow: isDragging ? '0 .5rem 1rem rgba(0,0,0,.15)' : 'none',
   display: isDragging ? 'table' : 'table-row',
@@ -26,6 +25,7 @@ const TableContainer = ({tableData, page}) => {
       low,
     } = content;
     const noValue = <span>&#9866;</span>;
+    const rowNumber = (index + 1) + (page - 1 ) * 10;
         
     return (
       <Draggable
@@ -38,7 +38,7 @@ const TableContainer = ({tableData, page}) => {
             provided={provided} 
             style={getDraggableStyle(isDragging, provided)}
           >
-            {(index + 1) + (page - 1 ) * 10}
+            {rowNumber}
             {companyName || noValue}
             {primaryExchange || noValue}
             {calculationPrice || noValue}
@@ -53,14 +53,14 @@ const TableContainer = ({tableData, page}) => {
   return (
     <table className="table table-borderless shadow mb-3 bg-white rounded">
       <caption>Most active companies rating</caption>
-      <thead className="thead border-bottom border-secondary">
+      <thead className="thead border-bottom border-secondary table-head">
         <ThRow>
-          <div>&#8470;</div>
-          <div>Company</div>
-          <div>Primary Exchange</div>
-          <div>Calculation Price</div>
-          <div>High Price&#47;&#36;</div>
-          <div>Low Price&#47;&#36;</div>
+          <span>&#8470;</span>
+          <span>Company</span>
+          <span>Primary Exchange</span>
+          <span>Calculation Price</span>
+          <span>High Price&#47;&#36;</span>
+          <span>Low Price&#47;&#36;</span>
         </ThRow>
       </thead>
       <Droppable droppableId="droppableId">

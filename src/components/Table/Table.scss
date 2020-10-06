@@ -1,17 +1,12 @@
-td {
+.table-cell {
   table-layout: fixed;
-  vertical-align: center;
+  vertical-align: middle;
 }
 
-tr:not(:first-child) {
+.table-row {
   background-color: white;
 }
 
-.thead {
+.table-head {
   background-color: #95a5a6;
 }
-
-// table {
-//   width: 100%;
-//   height: auto;
-// }
